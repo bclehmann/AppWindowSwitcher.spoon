@@ -46,6 +46,7 @@
 
 require("hs.hotkey")
 require("hs.window")
+require("hs.application")
 require("hs.inspect")
 require("hs.fnutils")
 
@@ -137,11 +138,27 @@ function obj:bindHotkeys(mapping)
                     end
                 end
             end
+	        if not newW then
+                -- app is invisible (minimized or hidden)
+                for _, w in pairs(hs.window.invisibleWindows()) do
+                    if obj.match(w, matchtexts) then
+                        newW = w
+                        newW:maximize()
+                        break
+                    end
+                end
+            end
             if newW then
                 newW:raise():focus()
             else
-                hs.alert.show("No window open for " .. 
-                    hs.inspect(matchtexts))
+                -- Try to launch it
+                for _, text in pairs(matchtexts) do
+                    didLaunch = hs.application.launchOrFocus(text)
+                end
+
+                if not didLaunch then
+                    hs.alert("Couldn't launch")
+                end
             end
         end)
     end
