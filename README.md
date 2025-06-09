@@ -1,3 +1,9 @@
+## Forkers Notes
+
+I forked this to add support for focusing invisible (i.e. minimized) windows, and launching apps if they have no windows.
+
+The original readme is below
+
 # AppWindowSwitcher
 
 macOS application aware, keyboard driven window switcher. Spoon 
